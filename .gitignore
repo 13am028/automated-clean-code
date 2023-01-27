@@ -167,3 +167,5 @@ cython_debug/
 coverage.xml
 .idea
 .vscode/
+
+node_modules/
