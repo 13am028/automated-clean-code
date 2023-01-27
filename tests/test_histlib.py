@@ -13,13 +13,13 @@ def test_parse(mock_args: mock.MagicMock):
 
 
 def test_hist():
-    counter = hist(Namespace(fname="/Users/13am/Desktop/automated-clean-code/tests/exercise_20_data.txt"))
+    counter = hist(Namespace(fname="exercise_20_data.txt"))
     assert counter["apple"] == 3
     assert counter["banana"] == 2
 
 
 def test_min_max_key():
-    counter = hist(Namespace(fname="/Users/13am/Desktop/automated-clean-code/tests/exercise_20_data.txt"))
+    counter = hist(Namespace(fname="exercise_20_data.txt"))
     min_max = find_min_max_key(counter)
     assert min_max.max_key == "apple"
     assert min_max.max_counter == 3
