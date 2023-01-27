@@ -5,26 +5,30 @@ import argparse
 from dataclasses import dataclass
 from typing import Dict
 
+
 @dataclass
 class MinMax:
-    min_key: str = ''
+    """Dataclass for storing min/max key,values."""
+
+    min_key: str = ""
     min_counter: int = 0
-    max_key: str = ''
+    max_key: str = ""
     max_counter: int = 0
 
 
-def parse():
+def parse() -> argparse.Namespace:
+    """Parse and get the filename from commandline arguments."""
     parser = argparse.ArgumentParser(
-        description='compute the entry with the most occurrence and the least occurrence form a file')
-    parser.add_argument('fname', metavar='N', type=str,
-                        help='filename to compute the histogram')
+        description="compute the entry with the most occurrence and the least occurrence form a file"
+    )
+    parser.add_argument("fname", metavar="N", type=str, help="filename to compute the histogram")
     return parser.parse_args()
 
 
 def hist(args: argparse.Namespace) -> Dict[str, int]:
+    """Create histogram for word frequency."""
     counter = {}
-    # fill up histogram
-    with open(args.fname, 'r') as f:
+    with open(args.fname, "r") as f:
         for line in f:
             line = line.strip()
             if line in counter:
@@ -35,30 +39,26 @@ def hist(args: argparse.Namespace) -> Dict[str, int]:
 
 
 def find_min_max_key(counter: Dict[str, int]) -> MinMax:
+    """Find min/max key and value."""
     ret = MinMax()
-    # find max key
     for k, v in counter.items():
-        if ret.max_key == '' or v > ret.max_counter:
+        if ret.max_key == "" or v > ret.max_counter:
             ret.max_key = k
             ret.max_counter = v
-        if ret.min_key == '' or v < ret.min_counter:
+        if ret.min_key == "" or v < ret.min_counter:
             ret.min_key = k
             ret.min_counter = v
     return ret
 
 
 def print_min_max(min_max: MinMax):
-    print(f'Min Key = {min_max.min_key} with count = {min_max.min_counter}')
-    print(f'Max Key = {min_max.max_key} with count = {min_max.max_counter}')
+    """Print output of min/max."""
+    print(f"Min Key = {min_max.min_key} with count = {min_max.min_counter}")
+    print(f"Max Key = {min_max.max_key} with count = {min_max.max_counter}")
 
 
-
-def main():
+if __name__ == "__main__":
     args: argparse.Namespace = parse()
     counter: Dict[str, int] = hist(args)
     min_max: MinMax = find_min_max_key(counter)
     print_min_max(min_max)
-
-
-if __name__ == '__main__':
-    main()
